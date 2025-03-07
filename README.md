@@ -13,6 +13,7 @@ Aqui você encontrará os projetos e atividades desenvolvidas ao longo do semest
 | -------------------------------- | ---------------- | --------------------- |
 | **📱 Introdução ao Spring Boot** |                  | 21/02/2025            |
 | **📱 API REST com Spring Boot**  |                  | 28/02/2025            |
+| **📱 Marcação de Consultas**     |                  | 07/03/2025            |
 
 ---
 
