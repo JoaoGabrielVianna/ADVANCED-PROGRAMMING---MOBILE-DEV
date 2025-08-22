@@ -20,7 +20,7 @@ const RegisterScreen: React.FC = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-
+  const [userType, setUserType] = useState<'PACIENTE' | 'ADMIN'>('PACIENTE');
   const handleRegister = async () => {
     try {
       setLoading(true);
@@ -35,6 +35,7 @@ const RegisterScreen: React.FC = () => {
         name,
         email,
         password,
+        userType,
       });
 
       // Após o registro bem-sucedido, navega para o login
@@ -76,6 +77,27 @@ const RegisterScreen: React.FC = () => {
       />
 
       {error ? <ErrorText>{error}</ErrorText> : null}
+
+      <SectionTitle>Tipo de Usuário</SectionTitle>
+      <UserTypeContainer>
+        <UserTypeButton 
+          selected={userType === 'PACIENTE'}
+          onPress={() => setUserType('PACIENTE')}
+        >
+          <UserTypeText selected={userType === 'PACIENTE'}>
+            Paciente
+          </UserTypeText>
+        </UserTypeButton>
+        
+        <UserTypeButton 
+          selected={userType === 'ADMIN'}
+          onPress={() => setUserType('ADMIN')}
+        >
+          <UserTypeText selected={userType === 'ADMIN'}>
+            Administrador
+          </UserTypeText>
+        </UserTypeButton>
+      </UserTypeContainer>
 
       <Button
         title="Cadastrar"

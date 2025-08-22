@@ -9,31 +9,33 @@ const STORAGE_KEYS = {
 };
 
 // Médicos mockados que podem fazer login
-const mockDoctors = [
-  {
-    id: '1',
-    name: 'Dr. João Silva',
-    email: 'joao@example.com',
-    role: 'doctor' as const,
-    specialty: 'Cardiologia',
-    image: 'https://randomuser.me/api/portraits/men/1.jpg',
-  },
-  {
-    id: '2',
-    name: 'Dra. Maria Santos',
-    email: 'maria@example.com',
-    role: 'doctor' as const,
-    specialty: 'Pediatria',
-    image: 'https://randomuser.me/api/portraits/women/1.jpg',
-  },
-  {
-    id: '3',
-    name: 'Dr. Pedro Oliveira',
-    email: 'pedro@example.com',
-    role: 'doctor' as const,
-    specialty: 'Ortopedia',
-    image: 'https://randomuser.me/api/portraits/men/2.jpg',
-  },
+
+// Dados removidos - agora vêm da API
+const mockDoctors:any = [
+  // {
+  //   id: '1',
+  //   name: 'Dr. João Silva',
+  //   email: 'joao@example.com',
+  //   role: 'doctor' as const,
+  //   specialty: 'Cardiologia',
+  //   image: 'https://randomuser.me/api/portraits/men/1.jpg',
+  // },
+  // {
+  //   id: '2',
+  //   name: 'Dra. Maria Santos',
+  //   email: 'maria@example.com',
+  //   role: 'doctor' as const,
+  //   specialty: 'Pediatria',
+  //   image: 'https://randomuser.me/api/portraits/women/1.jpg',
+  // },
+  // {
+  //   id: '3',
+  //   name: 'Dr. Pedro Oliveira',
+  //   email: 'pedro@example.com',
+  //   role: 'doctor' as const,
+  //   specialty: 'Ortopedia',
+  //   image: 'https://randomuser.me/api/portraits/men/2.jpg',
+  // },
 ];
 
 // Admin mockado
@@ -60,7 +62,7 @@ export const authService = {
 
     // Verifica se é um médico
     const doctor = mockDoctors.find(
-      (d) => d.email === credentials.email && credentials.password === '123456'
+      (d:any) => d.email === credentials.email && credentials.password === '123456'
     );
     if (doctor) {
       return {
@@ -91,7 +93,7 @@ export const authService = {
   async register(data: RegisterData): Promise<AuthResponse> {
     // Verifica se o email já está em uso
     if (
-      mockDoctors.some((d) => d.email === data.email) ||
+      mockDoctors.some((d:any) => d.email === data.email) ||
       mockAdmin.email === data.email ||
       registeredUsers.some((u) => u.email === data.email)
     ) {
@@ -148,7 +150,9 @@ export const authService = {
   },
 
   async getAllDoctors(): Promise<User[]> {
-    return mockDoctors;
+    // DEPRECIADO: Use authApiService.getAllDoctors() instead
+    return [];
+    // return mockDoctors;
   },
 
   async getPatients(): Promise<User[]> {

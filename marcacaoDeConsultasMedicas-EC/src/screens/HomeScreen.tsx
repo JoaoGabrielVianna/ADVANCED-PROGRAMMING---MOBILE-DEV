@@ -11,31 +11,47 @@ import { Appointment } from '../types/appointments';
 import { Doctor } from '../types/doctors';
 import { RootStackParamList } from '../types/navigation';
 import { useFocusEffect } from '@react-navigation/native';
+import { User } from '../types/auth';
 
 type HomeScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Home'>;
 };
 
-const doctors: Doctor[] = [
-  {
-    id: '1',
-    name: 'Dr. João Silva',
-    specialty: 'Cardiologista',
-    image: 'https://mighty.tools/mockmind-api/content/human/91.jpg',
-  },
-  {
-    id: '2',
-    name: 'Dra. Maria Santos',
-    specialty: 'Dermatologista',
-    image: 'https://mighty.tools/mockmind-api/content/human/97.jpg',
-  },
-  {
-    id: '3',
-    name: 'Dr. Pedro Oliveira',
-    specialty: 'Oftalmologista',
-    image: 'https://mighty.tools/mockmind-api/content/human/79.jpg',
-  },
-];
+// const doctors: Doctor[] = [
+//   {
+//     id: '1',
+//     name: 'Dr. João Silva',
+//     specialty: 'Cardiologista',
+//     image: 'https://mighty.tools/mockmind-api/content/human/91.jpg',
+//   },
+//   {
+//     id: '2',
+//     name: 'Dra. Maria Santos',
+//     specialty: 'Dermatologista',
+//     image: 'https://mighty.tools/mockmind-api/content/human/97.jpg',
+//   },
+//   {
+//     id: '3',
+//     name: 'Dr. Pedro Oliveira',
+//     specialty: 'Oftalmologista',
+//     image: 'https://mighty.tools/mockmind-api/content/human/79.jpg',
+//   },
+// ];
+
+const [doctors, setDoctors]= useState<User[]>([]);
+
+// FUNÇÃO para carregar médicos da API
+const loadDoctors = async () => {
+  try {
+    const doctorsData = await authApiService.getAllDoctors();
+    setDoctors(doctorsData);
+  } catch (error) {
+    console.error('Erro ao carregar médicos:', error);
+  }
+};
+
+
+
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
@@ -51,6 +67,14 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
       console.error('Erro ao carregar consultas:', error);
     }
   };
+
+  // CARREGAMENTO automático
+useFocusEffect(
+  React.useCallback(() => {
+    loadAppointments();
+    loadDoctors(); // Carrega médicos da API
+  }, [])
+);
 
   useFocusEffect(
     React.useCallback(() => {
